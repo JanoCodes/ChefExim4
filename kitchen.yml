@@ -1,0 +1,27 @@
+---
+driver:
+  name: azurerm
+  subscription_id: '9292478a-8f13-4790-b717-a7389892bb5d'
+  location: 'West US'
+  machine_size: 'Standard_B1s'
+
+transport:
+  ssh_key: ~/.ssh/id_kitchen
+
+provisioner:
+  name: chef_zero
+
+verifier:
+  name: inspec
+
+platforms:
+  - name: ubuntu-18.04
+    driver:
+      image_urn: Canonical:UbuntuServer:18.04-LTS:latest
+      vm_name: binoic-vm
+      vm_tags:
+        ostype: linux
+        distro: ubuntu
+
+suites:
+  - name: default
