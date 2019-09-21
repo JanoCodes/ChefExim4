@@ -2,7 +2,7 @@
 
 This file is used to list changes made in each version of the exim4 cookbook.
 
-# 0.1.0
+## 0.1.0
 
 Initial release.
 
