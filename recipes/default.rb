@@ -27,16 +27,27 @@ end
 
 package 'exim4 dependencies' do
     case node[:platform]
-    when 'ubuntu', 'debian'
-        package_name %w(libc6 libgdbm5 libldap-2.4-2 libpcre3 libssl1.1)
+    when 'ubuntu'
+        case node['platform_version'].split('.')[0]
+        when '16'
+            package_name %w(libc6 libgdbm3 libldap-2.4-2 libpcre3 libssl1.0)
+        when '18'
+            package_name %w(libc6 libgdbm5 libldap-2.4-2 libpcre3 libssl1.1)
+        end
+    when 'debian'
+        package_name %w(libc6 libgdbm3 libldap-2.4-2 libpcre3 libssl1.1)
     end
     action :install
 end
 
 package 'exim4 build dependencies' do
     case node[:platform]
-    when 'ubuntu', 'debian'
-        package_name %w(build-essential gcc libc6-dev libgdbm-dev libjansson-dev libldap2-dev libmysqlclient-dev libpcre3-dev libssl-dev pkg-config)
+    when 'ubuntu'
+        package_name %w(build-essential gcc libc6-dev libgdbm-dev libjansson-dev libldap2-dev
+            libmysqlclient-dev libpcre3-dev libssl-dev pkg-config)
+    when 'debian'
+        package_name %w(build-essential gcc libc6-dev libgdbm-dev libjansson-dev libldap2-dev
+            default-libmysqlclient-dev libpcre3-dev libssl-dev pkg-config)
     end
     action :install
 end
