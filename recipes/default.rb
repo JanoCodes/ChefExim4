@@ -51,8 +51,14 @@ package 'exim4 build dependencies' do
         package_name %w(build-essential gcc libc6-dev libgdbm-dev libjansson-dev libldap2-dev
             libmysqlclient-dev libpcre3-dev libssl-dev pkg-config)
     when 'debian'
-        package_name %w(build-essential gcc libc6-dev libgdbm-dev libjansson-dev libldap2-dev
-            default-libmysqlclient-dev libpcre3-dev libssl-dev pkg-config)
+        case node['platform_version'].split('.')[0]
+        when '8'
+          package_name %w(build-essential gcc libc6-dev libgdbm-dev libjansson-dev libldap2-dev
+              libmysqlclient-dev libpcre3-dev libssl-dev pkg-config)
+        when '9'
+          package_name %w(build-essential gcc libc6-dev libgdbm-dev libjansson-dev libldap2-dev
+              default-libmysqlclient-dev libpcre3-dev libssl-dev pkg-config)
+        end
     end
     action :install
 end
