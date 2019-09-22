@@ -35,7 +35,12 @@ package 'exim4 dependencies' do
             package_name %w(libc6 libgdbm5 libldap-2.4-2 libpcre3 libssl1.1)
         end
     when 'debian'
-        package_name %w(libc6 libgdbm3 libldap-2.4-2 libpcre3 libssl1.1)
+        case node['platform_version'].split('.')[0]
+        when '8'
+            package_name %w(libc6 libgdbm3 libldap-2.4-2 libpcre3 libssl1.0)
+        when '9'
+            package_name %w(libc6 libgdbm3 libldap-2.4-2 libpcre3 libssl1.1)
+        end
     end
     action :install
 end
